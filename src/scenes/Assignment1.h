@@ -1,6 +1,8 @@
 #pragma once
 
 #include "core/Simple2DScene.h"
+#include <iostream>
+#include "./objects/circle.h"
 
 class Assignment1 : public Simple2DScene {
 public:
@@ -20,5 +22,6 @@ private:
     float circleRadius;
     glm::vec2 velocity;
     glm::vec2 acceleration;
+    std::vector<Circle> vectorArray(Circle);
 };
 

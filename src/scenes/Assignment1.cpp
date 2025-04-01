@@ -1,4 +1,5 @@
 #include "Assignment1.h"
+#include "./objects/circle.h"
 #include <iostream>
 
 #include "imgui.h"
@@ -7,23 +8,29 @@ using namespace std;
 Assignment1::Assignment1() : circlePosition(0, 4), circleRadius(1), velocity(0, 0), acceleration(0, -9.81) {}
 Assignment1::~Assignment1() {}
 
-void Assignment1::OnEnable() {}
 
-void Assignment1::OnDisable() {}
+void Assignment1::OnEnable() {
+    Circle* circle = new Circle();
+}
+
+void Assignment1::OnDisable() {
+}
 
 void Assignment1::Update(float deltaTime) {
     //float gravity = -9.81f;
     //acceleration[1] = gravity;
         
-    if (circlePosition[1] < 0 + circleRadius)
+    /*if (circlePosition[1] < 0 + circleRadius)
     {
         circlePosition[1] = 0 + circleRadius;
         velocity = velocity * glm::vec2(-1, -1);
 
-    }
+    }*/
 
-    velocity = velocity + acceleration * deltaTime;
-    circlePosition = circlePosition + velocity * deltaTime; 
+    circle.PhysicsStep(deltaTime);
+
+    //velocity = velocity + acceleration * deltaTime;
+    //circlePosition = circlePosition + velocity * deltaTime; 
 }
 
 void Assignment1::Draw() {

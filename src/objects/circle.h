@@ -10,6 +10,7 @@ public:
     virtual void CalculateVelocity();
     virtual void PhysicsStep(float dt);
     virtual void Collide();
+    virtual void Draw();
     virtual const char* GetName() { return "Circle Object"; };
 
 private:
