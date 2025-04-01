@@ -20,4 +20,5 @@ public:
 private:
     glm::vec2 circlePosition;
     float circleRadius;
+    //glm::vector<float> test3;
 };

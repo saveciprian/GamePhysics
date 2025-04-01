@@ -1,17 +1,21 @@
 cmake_minimum_required(VERSION 3.20)
 
-set(NAME "GamePhysics")
-project(${NAME})
+set(NAME "GamePhysics") #created a variable with the name NAME and set it to "Game Physics" -- is it creating a variable with any name or does it have to be named like that?
+project(${NAME}) #set the project's name to the value inside the variable; does it have to match the project folder?
 
 set(CMAKE_CXX_STANDARD 11)
 
 # Include all files inside the scenes folder in the build.
 file(GLOB_RECURSE SCENE_SOURCES CONFIGURE_DEPENDS "src/scenes/**.cpp" "src/scenes/**.h")
+
+file(GLOB_RECURSE OBJECTS_SOURCES CONFIGURE_DEPENDS "src/objects/**.cpp" "src/objects/**.h")
 # Create a filter in Visual Studio for all files in the scenes folder.
 source_group("scenes" FILES ${SCENE_SOURCES})
 
+source_group("objects" FILES ${OBJECTS_SOURCES})
+
 # All files to be build have to be added here.
-add_executable(${NAME} src/main.cpp ${SCENE_SOURCES})
+add_executable(${NAME} src/main.cpp ${SCENE_SOURCES} ${OBJECTS_SOURCES})
 
 target_include_directories(${NAME} PRIVATE src)
 
