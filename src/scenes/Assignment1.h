@@ -3,6 +3,7 @@
 #include "core/Simple2DScene.h"
 #include <iostream>
 #include "./objects/circle.h"
+#include <vector>
 
 class Assignment1 : public Simple2DScene {
 public:
@@ -15,13 +16,16 @@ public:
     virtual void Draw() override;
     virtual void DrawGUI() override;
 
+    void addGameObject(Circle& obj);
+
     virtual const char* GetName() override { return "Assignment1"; };
+    std::vector<Circle> objectPool;
 
 private:
     glm::vec2 circlePosition;
-    float circleRadius;
     glm::vec2 velocity;
+    float circleRadius;
     glm::vec2 acceleration;
-    std::vector<Circle> vectorArray(Circle);
+
 };
 

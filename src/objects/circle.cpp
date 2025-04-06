@@ -2,12 +2,14 @@
 #include "core/Draw.h"
 #include <iostream>
 
-Circle::Circle()
+Circle::Circle(glm::vec2 pos)
     : position(0, 4),
       circleRadius(1),
       velocity(0, 0),
       acceleration(0, -9.81),
       deltaTime(0) {
+
+    position = pos;
 }
 
 Circle::~Circle() {}
