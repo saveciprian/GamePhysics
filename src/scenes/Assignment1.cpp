@@ -1,5 +1,4 @@
 #include "Assignment1.h"
-#include "./objects/circle.h"
 #include <iostream>
 
 #include "imgui.h"
@@ -14,6 +13,20 @@ Assignment1::Assignment1() : circlePosition(0, 4), circleRadius(1), velocity(0, 
 
     Circle* circle3 = new Circle(glm::vec2(-3, 6));
     addGameObject(*circle3);
+
+    Bounds* upperBounds = new Bounds(glm::vec2(0, 10), glm::vec2(0, -1), 10);
+
+    Bounds* lowerBounds = new Bounds(glm::vec2(0, -10), glm::vec2(0, 1), 10);
+
+    Bounds* rightSide = new Bounds(glm::vec2(10, 0), glm::vec2(-1, 0), 10);
+
+    Bounds* leftSide = new Bounds(glm::vec2(-10, 0), glm::vec2(1, 0), 10);
+
+    boundsPool.push_back(*upperBounds);
+    boundsPool.push_back(*lowerBounds);
+    boundsPool.push_back(*rightSide);
+    boundsPool.push_back(*leftSide);
+
 }
 Assignment1::~Assignment1() {}
 
@@ -68,7 +81,12 @@ void Assignment1::Draw() {
         Draw::Line(glm::vec2(0, 0), objectPool[i].position);
     }
 
-    
+    for (int i = 0; i < boundsPool.size(); i++) {
+        boundsPool[i].Draw();
+    }
+
+    //Draw::AABB lets you draw a rectangle between 2 points and also fill it
+    //can also add a position handle so you can move stuff directly in imgui    
 }
 
 void Assignment1::DrawGUI() {
@@ -83,9 +101,26 @@ void Assignment1::DrawGUI() {
         ImGui::PopID();
     }
 
+    if (ImGui::Button("Reset"))
+    {
+        for (int i = 0; i < objectPool.size(); i++) {
+            objectPool[i].position = glm::vec2(0, 2);
+            objectPool[i].velocity = glm::vec2(0);
+            objectPool[i].acceleration = glm::vec2(0);
+        }
+    }
+
     //ImGui::DragFloat2("Circle Position", &circlePosition[0], 0.1f);
     //ImGui::DragFloat("Circle Radius", &circleRadius, 0.1f);
     //ImGui::DragFloat2("Velocity", &velocity[0], 0.1f);
     //ImGui::DragFloat2("Acceleration", &acceleration[0], 0.1f);
     ImGui::End();
+}
+
+void Assignment1::registerBounds(Bounds& bound) {
+    for (int i = 0; i < objectPool.size(); i++)
+    {
+        objectPool[i].bounds.push_back(bound);
+    }
+
 }

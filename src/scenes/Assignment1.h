@@ -3,6 +3,7 @@
 #include "core/Simple2DScene.h"
 #include <iostream>
 #include "./objects/circle.h"
+#include "./objects/bounds.h"
 #include <vector>
 
 class Assignment1 : public Simple2DScene {
@@ -17,9 +18,11 @@ public:
     virtual void DrawGUI() override;
 
     void addGameObject(Circle& obj);
+    void registerBounds(Bounds& bound);
 
     virtual const char* GetName() override { return "Assignment1"; };
     std::vector<Circle> objectPool;
+    std::vector<Bounds> boundsPool;
 
 private:
     glm::vec2 circlePosition;

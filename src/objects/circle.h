@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <vector>
+#include "bounds.h"
 
 class Circle {
 public:
@@ -13,12 +14,13 @@ public:
     virtual void Collide();
     virtual void Draw();
     virtual const char* GetName() { return "Circle Object"; };
-    int Circle::getMangitude(glm::vec2 vec);
+    int getMangitude(glm::vec2 vec);
     glm::vec2 position;
     float circleRadius;
     glm::vec2 velocity;
     glm::vec2 acceleration;
     float deltaTime;
+    std::vector<Bounds> bounds;
     std::vector<glm::vec2> forceFields;
 
 private:
