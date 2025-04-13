@@ -4,6 +4,7 @@
 #include <iostream>
 #include "./objects/circle.h"
 #include "./objects/bounds.h"
+#include "./objects/ForceField.h"
 #include <vector>
 
 class Assignment1 : public Simple2DScene {
@@ -20,9 +21,12 @@ public:
     void addGameObject(Circle& obj);
     void registerBounds(Bounds& bound);
 
+    void registerObject(Circle& obj, ForceField& force);
+
     virtual const char* GetName() override { return "Assignment1"; };
     std::vector<Circle> objectPool;
     std::vector<Bounds> boundsPool;
+    std::vector<ForceField> forces;
 
 private:
     glm::vec2 circlePosition;

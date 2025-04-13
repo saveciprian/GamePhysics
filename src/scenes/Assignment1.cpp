@@ -1,31 +1,48 @@
 #include "Assignment1.h"
 #include <iostream>
-
 #include "imgui.h"
 using namespace std;
 
 Assignment1::Assignment1() : circlePosition(0, 4), circleRadius(1), velocity(0, 0), acceleration(0, -9.81) {
-    Circle *circle = new Circle(glm::vec2(0, 2));
+    Circle *circle = new Circle(glm::vec2(0, 2), 30);
     addGameObject(*circle);
 
-    Circle* circle2 = new Circle(glm::vec2(3, 5));
+    Circle* circle2 = new Circle(glm::vec2(3, 5), 1);
     addGameObject(*circle2);
 
-    Circle* circle3 = new Circle(glm::vec2(-3, 6));
+    Circle* circle3 = new Circle(glm::vec2(-3, 6), 1000);
     addGameObject(*circle3);
 
+    //added bounds here
     Bounds* upperBounds = new Bounds(glm::vec2(0, 10), glm::vec2(0, -1), 10);
-
     Bounds* lowerBounds = new Bounds(glm::vec2(0, -10), glm::vec2(0, 1), 10);
-
     Bounds* rightSide = new Bounds(glm::vec2(10, 0), glm::vec2(-1, 0), 10);
-
     Bounds* leftSide = new Bounds(glm::vec2(-10, 0), glm::vec2(1, 0), 10);
+    
 
+    //added bounds to array
     boundsPool.push_back(*upperBounds);
     boundsPool.push_back(*lowerBounds);
     boundsPool.push_back(*rightSide);
     boundsPool.push_back(*leftSide);
+
+    for ( int i = 0; i < boundsPool.size(); i++) {
+        registerBounds(boundsPool[i]);
+    }
+
+    ForceField* force1 = new ForceField(glm::vec2(-1, 2), 3);
+    ForceField* force2 = new ForceField(glm::vec2(3, -3), 5);
+    ForceField* force3 = new ForceField(glm::vec2(-6, 4), 3);
+
+    forces.push_back(*force1);
+    forces.push_back(*force2);
+    forces.push_back(*force3);
+
+    for (int i = 0; i < objectPool.size(); i++) {
+        registerObject(objectPool[i], *force1);
+        registerObject(objectPool[i], *force2);
+        registerObject(objectPool[i], *force3);
+    }
 
 }
 Assignment1::~Assignment1() {}
@@ -67,8 +84,12 @@ void Assignment1::addGameObject(Circle& obj) {
 }
 
 void Assignment1::Draw() {
-    Draw::SetColor(0xffaaffaa); // Wtf is this A-BGR ?
-    Draw::Line(glm::vec2(-5, 0), glm::vec2(5, 0));
+    for (int i = 0; i < forces.size(); i++) {
+        forces[i].Draw();
+    }
+
+    //Draw::SetColor(0xffaaffaa); // Wtf is this A-BGR ?
+    //Draw::Line(glm::vec2(-5, 0), glm::vec2(5, 0));
     
     for (int i = 0; i < objectPool.size(); i++) {
         //Draw circle
@@ -84,6 +105,7 @@ void Assignment1::Draw() {
     for (int i = 0; i < boundsPool.size(); i++) {
         boundsPool[i].Draw();
     }
+
 
     //Draw::AABB lets you draw a rectangle between 2 points and also fill it
     //can also add a position handle so you can move stuff directly in imgui    
@@ -124,3 +146,11 @@ void Assignment1::registerBounds(Bounds& bound) {
     }
 
 }
+
+void Assignment1::registerObject(Circle& obj, ForceField& force) {
+    obj.forces.push_back(force);
+}
+
+
+
+
