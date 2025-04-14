@@ -59,6 +59,34 @@ int Circle::getMangitude(glm::vec2 vec)
     return sqrt(pow(vec[0], 2) + pow(vec[1], 2));
 }
 
+void Circle::AddImpulse(glm::vec2 impulsePos) {
+    float mouseInfluence = 5.0;
+    
+    glm::vec2 mouseToObj = (position - impulsePos);
+    
+
+
+    velocity += normalized(mouseToObj) * mapRange(magnitude(mouseToObj), 0, 10, 20, 0);
+
+}
+
+float Circle::mapRange(float x, float in_min, float in_max, float out_min, float out_max)
+{
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    
+}
+
+float Circle::magnitude(glm::vec2 v) {
+    return (float)sqrt(pow(v.x, 2) + pow(v.y, 2));
+}
+
+glm::vec2 Circle::normalized(glm::vec2 v) {
+    return glm::vec2(v.x, v.y) / magnitude(v);
+}
+
+
+
+
 void Circle::PhysicsStep(float dt) {
 
     deltaTime = dt; //set object's value for delta time

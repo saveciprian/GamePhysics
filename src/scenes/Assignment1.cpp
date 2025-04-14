@@ -44,6 +44,9 @@ Assignment1::Assignment1() : circlePosition(0, 4), circleRadius(1), velocity(0, 
         registerObject(objectPool[i], *force3);
     }
 
+    
+
+
 }
 Assignment1::~Assignment1() {}
 
@@ -56,17 +59,48 @@ void Assignment1::OnDisable() {
 }
 
 void Assignment1::Update(float deltaTime) {
-    //float gravity = -9.81f;
-    //acceleration[1] = gravity;
+    //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    //ImVec2 mousePos = ImGui::GetMousePos();
+    //glm::vec2 screenPosition(mousePos.x, mousePos.y);
+
+    //ImVec2 viewportPos = ImGui::GetWindowPos();
+    //glm::vec2 viewportPosition(viewportPos.x, viewportPos.y);
+
+    //ImVec2 viewportSize = ImGui::GetWindowSize();
+    //glm::vec2 mouseInViewport = screenPosition - viewportPosition;
+
+    //glm::vec2 normalizedMousePos =
+    //    (mouseInViewport / glm::vec2(viewportSize.x, viewportSize.y)) * 2.0f -
+    //    glm::vec2(1.0f, 1.0f);
+    //normalizedMousePos.y *= -1; // Flip Y-axis
+
+    //glm::vec2 worldPosition =
+    //    cameraCenter + normalizedMousePos * (orthographicSize / 2.0f);
+
+    //well this was easier lol
+    glm::vec2 mouse = Input::GetMousePosInWindow();
+
+    // Stages for mouse position
+    // ImGui::IsMouseClicked(0)
+    // ImGui::IsMouseDown(0)
+    // ImGui::IsMouseReleased(0)
+
+    if (ImGui::IsMouseClicked(0)) { 
+        for (int i = 0; i < objectPool.size(); i++) {
+            objectPool[i].AddImpulse(mouse);
+        }
+    }
+
+    if (ImGui::IsMouseDown(0)) { 
+        Draw::SetColor(0xffffffff);
+        Draw::Circle(mouse, 0.5f, true);
+        //std::cout << "Mouse is being held at: (" << mouse.x << ", " << mouse.y
+        //          << ")" << std::endl;
+    }
+
+    if (ImGui::IsMouseReleased(0)) { 
         
-    /*if (circlePosition[1] < 0 + circleRadius)
-    {
-        circlePosition[1] = 0 + circleRadius;
-        velocity = velocity * glm::vec2(-1, -1);
-
-    }*/
-
-    //circle.PhysicsStep(deltaTime);
+    }
 
     for (int i = 0; i < objectPool.size(); i++)
     {
@@ -112,7 +146,15 @@ void Assignment1::Draw() {
 }
 
 void Assignment1::DrawGUI() {
+
     ImGui::Begin("Inspector");
+
+    glm::vec2 mouse = Input::GetMousePosInWindow();
+    if (ImGui::IsMouseDown(0)) {
+        Draw::SetColor(0xffffffff);
+        Draw::Circle(mouse, 0.5f, true);
+        
+    }
 
     for (int i = 0; i < objectPool.size(); i++) {
         ImGui::PushID(i);
@@ -131,6 +173,9 @@ void Assignment1::DrawGUI() {
             objectPool[i].acceleration = glm::vec2(0);
         }
     }
+
+    //ImVec2 mousePos = ImGui::GetMousePos();
+    //ImGui::Text("Mouse Position: (%.1f, %.1f)", mousePos.x, mousePos.y);
 
     //ImGui::DragFloat2("Circle Position", &circlePosition[0], 0.1f);
     //ImGui::DragFloat("Circle Radius", &circleRadius, 0.1f);

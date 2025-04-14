@@ -17,6 +17,7 @@ public:
     virtual void Draw();
     virtual const char* GetName() { return "Circle Object"; };
     int getMangitude(glm::vec2 vec);
+    virtual void AddImpulse(glm::vec2 impulsePos);
     
     float deltaTime;
     glm::vec2 position;
@@ -27,6 +28,9 @@ public:
     std::vector<ForceField> forces;
     float circleRadius;
     float mass;
+    float mapRange(float x, float in_min, float in_max, float out_min, float out_max);
+    glm::vec2 normalized(glm::vec2 toNormalize);
+    float magnitude(glm::vec2 vect);
 
 private:
 

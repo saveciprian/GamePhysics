@@ -5,8 +5,8 @@
 int main(int argc, char** argv) {
     // Add newly created scenes here so that they show up in the menu.
     std::vector<Scene*> scenes = {
-        new Assignment1(),
         new TestScene(),
+        new Assignment1(),
     };
     Application app(scenes);
     return app.Run();
