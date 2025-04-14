@@ -4,13 +4,13 @@
 using namespace std;
 
 Assignment1::Assignment1() : circlePosition(0, 4), circleRadius(1), velocity(0, 0), acceleration(0, -9.81) {
-    Circle *circle = new Circle(glm::vec2(0, 2), 30);
+    Circle *circle = new Circle(glm::vec2(0, 2), 2);
     addGameObject(*circle);
 
-    Circle* circle2 = new Circle(glm::vec2(3, 5), 1);
+    Circle* circle2 = new Circle(glm::vec2(3, 5), 3);
     addGameObject(*circle2);
 
-    Circle* circle3 = new Circle(glm::vec2(-3, 6), 1000);
+    Circle* circle3 = new Circle(glm::vec2(-3, 6), 30);
     addGameObject(*circle3);
 
     //added bounds here
@@ -59,26 +59,7 @@ void Assignment1::OnDisable() {
 }
 
 void Assignment1::Update(float deltaTime) {
-    //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    //ImVec2 mousePos = ImGui::GetMousePos();
-    //glm::vec2 screenPosition(mousePos.x, mousePos.y);
-
-    //ImVec2 viewportPos = ImGui::GetWindowPos();
-    //glm::vec2 viewportPosition(viewportPos.x, viewportPos.y);
-
-    //ImVec2 viewportSize = ImGui::GetWindowSize();
-    //glm::vec2 mouseInViewport = screenPosition - viewportPosition;
-
-    //glm::vec2 normalizedMousePos =
-    //    (mouseInViewport / glm::vec2(viewportSize.x, viewportSize.y)) * 2.0f -
-    //    glm::vec2(1.0f, 1.0f);
-    //normalizedMousePos.y *= -1; // Flip Y-axis
-
-    //glm::vec2 worldPosition =
-    //    cameraCenter + normalizedMousePos * (orthographicSize / 2.0f);
-
-    //well this was easier lol
-    glm::vec2 mouse = Input::GetMousePosInWindow();
+    glm::vec2 mouse = Input::GetMousePos();
 
     // Stages for mouse position
     // ImGui::IsMouseClicked(0)
@@ -132,8 +113,11 @@ void Assignment1::Draw() {
 
 
         //Draw debug lines from origin point
-        Draw::SetColor(0xff0000ff);
-        Draw::Line(glm::vec2(0, 0), objectPool[i].position);
+        //Draw::SetColor(0xff0000ff);
+        //Draw::Line(glm::vec2(0, 0), objectPool[i].position);
+        Draw::SetColor(0xff00ff00);
+        Draw::Line(objectPool[i].position,
+                   objectPool[i].position + objectPool[i].velocity / 4.0f);
     }
 
     for (int i = 0; i < boundsPool.size(); i++) {
@@ -148,11 +132,11 @@ void Assignment1::Draw() {
 void Assignment1::DrawGUI() {
 
     ImGui::Begin("Inspector");
+    glm::vec2 mouse = Input::GetMousePos();
 
-    glm::vec2 mouse = Input::GetMousePosInWindow();
     if (ImGui::IsMouseDown(0)) {
-        Draw::SetColor(0xffffffff);
-        Draw::Circle(mouse, 0.5f, true);
+        Draw::SetColor(0x33ff0000);
+        Draw::Circle(mouse, 1.0f, true);
         
     }
 

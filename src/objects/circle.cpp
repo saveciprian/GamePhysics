@@ -2,6 +2,7 @@
 #include "core/Draw.h"
 #include <iostream>
 #include <math.h>
+#include "imgui.h"
 
 int forceFieldRadius = 3;
 
@@ -65,13 +66,16 @@ void Circle::AddImpulse(glm::vec2 impulsePos) {
     glm::vec2 mouseToObj = (position - impulsePos);
     
 
-
-    velocity += normalized(mouseToObj) * mapRange(magnitude(mouseToObj), 0, 10, 20, 0);
+    std::cout << "Magnitude: " << mapRange(magnitude(mouseToObj), 0, 5, 40, 0) / mass << std::endl;
+    velocity += normalized(mouseToObj) * mapRange(magnitude(mouseToObj), 0, 5, 100, 0) / mass;
 
 }
 
-float Circle::mapRange(float x, float in_min, float in_max, float out_min, float out_max)
-{
+float Circle::mapRange(float x, float in_min, float in_max, float out_min, float out_max) {
+    if (x < in_min)
+        x = in_min;
+    if (x > in_max)
+        x = in_max;
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     
 }
@@ -158,6 +162,10 @@ void Circle::Draw()
 {
     Draw::Circle(glm::vec2(-1, 0), 1);
     Draw::Circle(position, circleRadius);
+
+
+    
+
 }
 
 void Circle::Collide() {}
