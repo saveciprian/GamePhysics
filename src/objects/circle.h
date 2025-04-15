@@ -3,6 +3,7 @@
 #include <vector>
 #include "bounds.h"
 #include "ForceField.h"
+#include "collider.h"
 
 class Circle {
 public:
@@ -26,6 +27,7 @@ public:
     std::vector<Bounds> bounds;
     std::vector<glm::vec2> forceFields;
     std::vector<ForceField> forces;
+    std::vector<Collider> colliders;
     float circleRadius;
     float mass;
     float mapRange(float x, float in_min, float in_max, float out_min, float out_max);

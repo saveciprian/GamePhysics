@@ -14,7 +14,7 @@ Bounds::Bounds(glm::vec2 pos, glm::vec2 norm, int width)
 Bounds::~Bounds() {}
 
 void Bounds::Draw() {
-    Draw::SetColor(0xffffffff);
+    Draw::SetColor(0xffff3333);
     if (normal[0] == 0)
     {
         Draw::Line(glm::vec2(position[0] - size, position[1]),
