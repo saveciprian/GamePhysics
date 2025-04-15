@@ -3,6 +3,7 @@
 #include <iostream>
 #include <math.h>
 #include "imgui.h"
+#include "../core/Colors.h"
 
 int forceFieldRadius = 3;
 
@@ -30,6 +31,8 @@ Circle::Circle(glm::vec2 pos, float m)
 }
 
 Circle::~Circle() {}
+
+
 
 void Circle::CalculateAcceleration(glm::vec2 cummulative) {
     acceleration = glm::vec2(0, 0);
@@ -60,14 +63,17 @@ int Circle::getMangitude(glm::vec2 vec)
     return sqrt(pow(vec[0], 2) + pow(vec[1], 2));
 }
 
-void Circle::AddImpulse(glm::vec2 impulsePos) {
-    float mouseInfluence = 5.0;
-    
-    glm::vec2 mouseToObj = (position - impulsePos);
-    
+void Circle::AddImpulse(glm::vec2 impulse) {
+    /*float mouseInfluence = 5.0;
 
-    std::cout << "Magnitude: " << mapRange(magnitude(mouseToObj), 0, 5, 40, 0) / mass << std::endl;
-    velocity += normalized(mouseToObj) * mapRange(magnitude(mouseToObj), 0, 5, 100, 0) / mass;
+     glm::vec2 mouseToObj = (position - impulsePos);
+
+
+     std::cout << "Magnitude: " << mapRange(magnitude(mouseToObj), 0, 5, 40, 0)
+     / mass << std::endl;*/
+    // velocity += normalized(mouseToObj) *
+    // mapRange(magnitude(mouseToObj), 0, 5, 100, 0) / mass;
+    velocity += impulse / mass;
 
 }
 
@@ -126,35 +132,64 @@ void Circle::PhysicsStep(float dt) {
     //}
 
 
+    checkBounds(velocity, position);
 
-    //implement bound hitting here
-    for (int i = 0; i < bounds.size(); i++)
-    {
-        //Lower Bounds
-        if (bounds[i].normal[1] > 0 && position[1] < bounds[i].position[1] + circleRadius) {
-            position[1] = bounds[i].position[1] + circleRadius;
-            velocity = velocity * glm::vec2(1, -1);
+}
+
+void Circle::checkBounds(glm::vec2& vel, glm::vec2& pos) {
+    // implement bound hitting here
+    for (int i = 0; i < Circle::bounds.size(); i++) {
+        // Lower Bounds
+        if (bounds[i].normal[1] > 0 &&
+            pos[1] < bounds[i].position[1] + circleRadius) {
+            pos[1] = bounds[i].position[1] + circleRadius;
+            vel = vel * glm::vec2(1, -1);
         }
 
-        //Upper Bounds
-        if (bounds[i].normal[1] < 0 && position[1] > bounds[i].position[1] - circleRadius) {
-            position[1] = bounds[i].position[1] - circleRadius;
-            velocity = velocity * glm::vec2(1, -1);
+        // Upper Bounds
+        if (bounds[i].normal[1] < 0 &&
+            pos[1] > bounds[i].position[1] - circleRadius) {
+            pos[1] = bounds[i].position[1] - circleRadius;
+            vel = vel * glm::vec2(1, -1);
         }
 
-        //Left Bounds
-        if (bounds[i].normal[0] > 0 && position[0] < bounds[i].position[0] + circleRadius) {
-            position[0] = bounds[i].position[0] + circleRadius;
-            velocity = velocity * glm::vec2(-1, 1);
+        // Left Bounds
+        if (bounds[i].normal[0] > 0 &&
+            pos[0] < bounds[i].position[0] + circleRadius) {
+            pos[0] = bounds[i].position[0] + circleRadius;
+            vel = vel * glm::vec2(-1, 1);
         }
 
         // Right Bounds
-        if (bounds[i].normal[0] < 0 && position[0] > bounds[i].position[0] - circleRadius) {
-            position[0] = bounds[i].position[0] - circleRadius;
-            velocity = velocity * glm::vec2(-1, 1);
+        if (bounds[i].normal[0] < 0 &&
+            pos[0] > bounds[i].position[0] - circleRadius) {
+            pos[0] = bounds[i].position[0] - circleRadius;
+            vel = vel * glm::vec2(-1, 1);
         }
-        //should calculate bounce direction based on normal of the plane that it's bouncing on, not hard code it but will do that some other time
+        // should calculate bounce direction based on normal of the plane that
+        // it's bouncing on, not hard code it but will do that some other time
+    }
+}
 
+void Circle::Imagine(glm::vec2 mousePos, int steps)
+{   
+    glm::vec2 tempPos = position;
+    glm::vec2 tempVel = velocity;
+    glm::vec2 tempAccel = acceleration;
+    glm::vec2 gravity = glm::vec2(0, -9.81);
+
+    tempVel += mousePos / mass;
+
+    Draw::SetColor(0x448888ff);
+    for (int i = 0; i < steps; i++)
+    {
+        tempAccel = glm::vec2(0);
+        tempAccel += gravity;
+       
+        tempVel = tempVel + tempAccel * deltaTime;
+        tempPos = tempPos + tempVel * deltaTime;
+        checkBounds(tempVel, tempPos);
+        Draw::Circle(tempPos, circleRadius);    
     }
 }
 

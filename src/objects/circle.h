@@ -19,6 +19,8 @@ public:
     virtual const char* GetName() { return "Circle Object"; };
     int getMangitude(glm::vec2 vec);
     virtual void AddImpulse(glm::vec2 impulsePos);
+    void Imagine(glm::vec2 mousePos, int steps);
+    void checkBounds(glm::vec2& vel, glm::vec2& pos);
     
     float deltaTime;
     glm::vec2 position;
