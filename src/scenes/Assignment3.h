@@ -19,6 +19,7 @@ public:
 
     void addGameObject(Circle& obj);
     void registerBounds(Bounds& bound);
+    void registerCollider(Circle& obj, Collider& collider);
 
     virtual const char* GetName() override { return "Assignment 3"; };
 

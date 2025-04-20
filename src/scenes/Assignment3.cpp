@@ -27,8 +27,15 @@ void Assignment3::OnEnable() {
         registerBounds(boundsPool[i]);
     }
 
-    Collider* collider1 = new Collider(glm::vec2(-4,-7), glm::vec2(5, -4));
+    Collider* collider1 = new Collider(glm::vec2(-10, -10), glm::vec2(10, -5));
+
+    Collider* collider2 = new Collider(glm::vec2(-2, 3), glm::vec2(-4, -7));
+
     colliders.push_back(*collider1);
+    colliders.push_back(*collider2);
+    registerCollider(objectPool[0], *collider1);
+    registerCollider(objectPool[0], *collider2);
+    /*circle.colliders.push_back(*collider1);*/
     
 }
 
@@ -85,4 +92,8 @@ void Assignment3::registerBounds(Bounds& bound) {
     for (int i = 0; i < objectPool.size(); i++) {
         objectPool[i].bounds.push_back(bound);
     }
+}
+
+void Assignment3::registerCollider(Circle& obj, Collider& collider) {
+    obj.colliders.push_back(collider);
 }

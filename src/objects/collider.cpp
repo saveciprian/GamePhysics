@@ -17,7 +17,8 @@ Collider::~Collider() {}
 
 glm::vec2 Collider::getNormal(dir val) {
     glm::vec2 line = pointB - pointA;
-    glm::vec2 lineNormalized = normalized(line);
+    //glm::vec2 lineNormalized = normalized(line);
+    glm::vec2 lineNormalized = glm::normalize(line);
 
     if (val == cw){
         return glm::vec2(lineNormalized.y, lineNormalized.x * -1);

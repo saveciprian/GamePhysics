@@ -19,7 +19,7 @@ public:
     glm::vec2 normalized(glm::vec2 v);
     virtual void Draw();
 
-    
+    virtual const char* GetName() { return "Collider"; };
 
 
 private:

@@ -9,8 +9,8 @@ int main(int argc, char** argv) {
     std::vector<Scene*> scenes = {
         new TestScene(),
         new Assignment1(),
-        new Assignment3(),
         new Assignment2(),
+        new Assignment3(),
     };
     Application app(scenes);
     return app.Run();
