@@ -4,8 +4,9 @@
 #include "bounds.h"
 #include "ForceField.h"
 #include "collider.h"
+#include "GameObject.h"
 
-class Circle {
+class Circle : public GameObject {
 public:
     Circle(glm::vec2 pos);
     Circle(glm::vec2 pos, float mass);
@@ -16,7 +17,7 @@ public:
     virtual void PhysicsStep(float dt);
     virtual void Collide();
     virtual void Draw();
-    virtual const char* GetName() { return "Circle Object"; };
+    const char* GetName() override { return "Circle"; };
     int getMangitude(glm::vec2 vec);
     virtual void AddImpulse(glm::vec2 impulsePos);
     void Imagine(glm::vec2 mousePos, int steps);

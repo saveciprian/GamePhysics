@@ -21,7 +21,7 @@ public:
     void registerBounds(Bounds& bound);
     void registerCollider(Circle& obj, Collider& collider);
 
-    virtual const char* GetName() override { return "Assignment 3"; };
+    virtual const char* GetName() override { return "A4: Half Space Colliders"; };
 
     std::vector<Circle> objectPool;
     std::vector<Bounds> boundsPool;

@@ -23,7 +23,7 @@ public:
 
     void registerObject(Circle& obj, ForceField& force);
 
-    virtual const char* GetName() override { return "Assignment1"; };
+    virtual const char* GetName() override { return "A1: Forces"; };
     std::vector<Circle> objectPool;
     std::vector<Bounds> boundsPool;
     std::vector<ForceField> forces;

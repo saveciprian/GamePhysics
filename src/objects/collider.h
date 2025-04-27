@@ -1,8 +1,9 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <vector>
+#include "GameObject.h"
 
-class Collider {
+class Collider : public GameObject{
 public:
     Collider(glm::vec2 posA, glm::vec2 posB);
     ~Collider();
@@ -19,7 +20,7 @@ public:
     glm::vec2 normalized(glm::vec2 v);
     virtual void Draw();
 
-    virtual const char* GetName() { return "Collider"; };
+    const char* GetName() override { return "Collider"; };
 
 
 private:

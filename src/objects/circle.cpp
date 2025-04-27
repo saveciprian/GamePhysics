@@ -8,17 +8,21 @@
 int forceFieldRadius = 3;
 
 Circle::Circle(glm::vec2 pos)
-    : position(0, 4),
+    : GameObject(true),
+      position(0, 4),
       circleRadius(1),
       velocity(0, 0),
       acceleration(0, 0),
       deltaTime(0),
       mass(10.0) {
+    
     position = pos;
+    
 }
 
 Circle::Circle(glm::vec2 pos, float m)
-    : position(0, 4),
+    : GameObject(true),
+      position(0, 4),
       circleRadius(1),
       velocity(0, 0),
       acceleration(0, 0),
@@ -174,28 +178,28 @@ void Circle::checkBounds(glm::vec2& vel, glm::vec2& pos) {
 }
 
 void Circle::checkCollisions(glm::vec2& vel, glm::vec2& pos) {
-    for (int i = 0; i < colliders.size(); i++)
-    {
-        float distance = glm::dot(pos, colliders[i].normal) - 
-                         circleRadius -
-                         glm::dot(colliders[i].pointA, colliders[i].normal);
+    //for (int i = 0; i < colliders.size(); i++)
+    //{
+    //    float distance = glm::dot(pos, colliders[i].normal) - 
+    //                     circleRadius -
+    //                     glm::dot(colliders[i].pointA, colliders[i].normal);
 
-        if (distance <= 0)
-        {
-            std::cout << "Hit";
-            glm::vec2 trajectory = glm::normalize(velocity * -1.0f);
-            //pos += trajectory * abs(distance);
-            pos += colliders[i].normal * abs(distance);
-            //velocity = glm::vec2(0);
+    //    if (distance <= 0)
+    //    {
+    //        std::cout << "Hit";
+    //        glm::vec2 trajectory = glm::normalize(velocity * -1.0f);
+    //        //pos += trajectory * abs(distance);
+    //        pos += colliders[i].normal * abs(distance);
+    //        //velocity = glm::vec2(0);
 
-            std::cout << colliders[i].normal[0] << " ,"  << colliders[i].normal[1]
-                      << std::endl;
-            
-            velocity = velocity - 2.0f * (glm::dot(colliders[i].normal, velocity) *
-                       colliders[i].normal);
-        }
+    //        /*std::cout << colliders[i].normal[0] << " ,"  << colliders[i].normal[1]
+    //                  << std::endl;*/
+    //        
+    //        velocity = velocity - 2.0f * (glm::dot(colliders[i].normal, velocity) *
+    //                   colliders[i].normal);
+    //    }
 
-    }
+    //}
 }
 
 void Circle::Imagine(glm::vec2 mousePos, int steps)

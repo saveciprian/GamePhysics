@@ -2,6 +2,7 @@
 #include "scenes/Assignment1.h"
 #include "scenes/Assignment2.h"
 #include "scenes/Assignment3.h"
+#include "scenes/Assignment5.h"
 #include "scenes/TestScene.h"
 
 int main(int argc, char** argv) {
@@ -10,7 +11,8 @@ int main(int argc, char** argv) {
         new TestScene(),
         new Assignment1(),
         new Assignment2(),
-        new Assignment3(),
+        new Assignment3(), 
+        new Assignment5(),
     };
     Application app(scenes);
     return app.Run();

@@ -8,8 +8,10 @@
 #include "./objects/bounds.h"
 #include "./objects/circle.h"
 #include "./objects/collider.h"
+#include "./objects/GameObject.h"
+#include "./objects/World.h"
 
-class Assignment2 : public Simple2DScene {
+class Assignment5 : public Simple2DScene {
 public:
     virtual void OnEnable() override;
     virtual void OnDisable() override;
@@ -19,13 +21,14 @@ public:
 
     void addGameObject(Circle& obj);
     void registerBounds(Bounds& bound);
+    void registerCollider(Circle& obj, Collider& collider);
 
-    virtual const char* GetName() override { return "A2: Trajectory"; };
+    virtual const char* GetName() override { return "A5: Pool Game"; };
 
     std::vector<Circle> objectPool;
     std::vector<Bounds> boundsPool;
     std::vector<ForceField> forces;
     std::vector<Collider> colliders;
     glm::vec2 mouseDownPos;
-    bool isSimulating = false;
+    std::vector<Circle> worldObjects;
 };
