@@ -68,7 +68,7 @@ void Assignment1::Update(float deltaTime) {
 
     if (ImGui::IsMouseClicked(0)) { 
         for (int i = 0; i < objectPool.size(); i++) {
-            objectPool[i].AddImpulse(mouse);
+            //objectPool[i].AddImpulse(objectPool[i].position - mouse);
         }
     }
 
@@ -146,6 +146,7 @@ void Assignment1::DrawGUI() {
         ImGui::DragFloat("Circle Radius", &objectPool[i].circleRadius, 0.1f);
         ImGui::DragFloat2("Velocity", &objectPool[i].velocity[0], 0.1f);
         ImGui::DragFloat2("Acceleration", &objectPool[i].acceleration[0], 0.1f);
+        ImGui::DragFloat("Mass", &objectPool[i].mass, 0.1f);
         ImGui::PopID();
     }
 
@@ -155,6 +156,7 @@ void Assignment1::DrawGUI() {
             objectPool[i].position = glm::vec2(0, 2);
             objectPool[i].velocity = glm::vec2(0);
             objectPool[i].acceleration = glm::vec2(0);
+            
         }
     }
 

@@ -1,17 +1,20 @@
 #include "Assignment3.h"
 
-#include "imgui.h"
 #include "../core/Colors.h"
+#include "imgui.h"
+
+World* world_3 = new World();
 
 void Assignment3::OnEnable() {
-
-    //cameraCenter = glm::vec2(0, -3);
+    // cameraCenter = glm::vec2(0, -3);
     orthographicSize = 25;
 
-    Circle* circle = new Circle(glm::vec2(0, 2), 2);
-    addGameObject(*circle);
+    Circle circle(glm::vec2(0, 2), 2);
+    // auto circle2 = std::make_shared<Circle>(glm::vec2(1, 5), 1);
+    addGameObject(circle);
+    // addGameObject(*circle2);
 
-     // added bounds here
+    // added bounds here
     Bounds* upperBounds = new Bounds(glm::vec2(0, 10), glm::vec2(0, -1), 10);
     Bounds* lowerBounds = new Bounds(glm::vec2(0, -10), glm::vec2(0, 1), 10);
     Bounds* rightSide = new Bounds(glm::vec2(10, 0), glm::vec2(-1, 0), 10);
@@ -27,39 +30,45 @@ void Assignment3::OnEnable() {
         registerBounds(boundsPool[i]);
     }
 
-    Collider* collider1 = new Collider(glm::vec2(-10, -10), glm::vec2(10, -5));
+    Collider collider1(glm::vec2(-10, -10), glm::vec2(10, -5));
+    Collider collider2(glm::vec2(-2, 3), glm::vec2(-4, -7));
 
-    Collider* collider2 = new Collider(glm::vec2(-2, 3), glm::vec2(-4, -7));
-
-    colliders.push_back(*collider1);
-    colliders.push_back(*collider2);
-    registerCollider(objectPool[0], *collider1);
-    registerCollider(objectPool[0], *collider2);
+    colliders.push_back(collider1);
+    colliders.push_back(collider2);
+    registerCollider(objectPool[0], collider1);
+    registerCollider(objectPool[0], collider2);
     /*circle.colliders.push_back(*collider1);*/
     
+    world_3->setDamping(0);
+    world_3->registerObject(circle);
+    // world->registerObject(circle2);
+    world_3->registerCollider(collider1);
+    world_3->registerCollider(collider2);
 }
 
 void Assignment3::OnDisable() {}
 
 void Assignment3::Update(float deltaTime) {
-    for (int i = 0; i < objectPool.size(); i++) {
-        objectPool[i].PhysicsStep(deltaTime);
-    }
+    // for (int i = 0; i < objectPool.size(); i++) {
+    //     objectPool[i].PhysicsStep(deltaTime);
+    // }
+
+    world_3->tick(deltaTime);
+    worldObjects = world_3->getObjects();
 }
 
 void Assignment3::Draw() {
-    for (int i = 0; i < objectPool.size(); i++) {
+    for (int i = 0; i < worldObjects.size(); i++) {
         // Draw circle
         Draw::SetColor(0xffffffff);
-        Draw::Circle(objectPool[i].position, objectPool[i].circleRadius);
+        Draw::Circle(worldObjects[i].position, worldObjects[i].circleRadius);
 
         Draw::SetColor(0xff00ff00);
-        Draw::Line(objectPool[i].position,
-                   objectPool[i].position + objectPool[i].velocity / 4.0f);
+        Draw::Line(worldObjects[i].position,
+                   worldObjects[i].position + worldObjects[i].velocity / 4.0f);
     }
 
     for (int i = 0; i < boundsPool.size(); i++) {
-        
         boundsPool[i].Draw();
     }
 
@@ -74,9 +83,7 @@ void Assignment3::Draw() {
     for (int i = 0; i < colliders.size(); i++) {
         Draw::SetColor(Colors::orange);
         colliders[i].Draw();
-    } 
-    
-
+    }
 }
 
 void Assignment3::DrawGUI() {
@@ -90,7 +97,8 @@ void Assignment3::addGameObject(Circle& obj) {
 
 void Assignment3::registerBounds(Bounds& bound) {
     for (int i = 0; i < objectPool.size(); i++) {
-        objectPool[i].bounds.push_back(bound);
+        // objectPool[i].bounds.push_back(bound);
+        world_3->registerBounds(bound);
     }
 }
 

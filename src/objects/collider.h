@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include "GameObject.h"
+#include "core/Draw.h"
 
 class Collider : public GameObject{
 public:

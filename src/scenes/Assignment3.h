@@ -8,6 +8,8 @@
 #include "./objects/bounds.h"
 #include "./objects/ForceField.h"
 #include "./objects/collider.h"
+#include "./objects/GameObject.h"
+#include "./objects/World.h"
 
 class Assignment3 : public Simple2DScene {
 public:
@@ -28,4 +30,5 @@ public:
     std::vector<ForceField> forces;
     std::vector<Collider> colliders;
     glm::vec2 mouseDownPos;
+    std::vector<Circle> worldObjects;
 };
